@@ -12,6 +12,8 @@ A framework for analytics teams that combines Claude Code with specialized agent
 
 **Built on:** [Claude Code](https://docs.claude.com/en/docs/claude-code) (Anthropic's official AI coding assistant)
 
+**🚀 [Just want to try it? See QUICKSTART.md →](QUICKSTART.md)**
+
 ---
 
 ## TL;DR - Is This For You?
@@ -35,6 +37,18 @@ A framework for analytics teams that combines Claude Code with specialized agent
 - ⚡ Setup: 5 minutes (interactive questions about your stack)
 - ⚡ First project: Immediate (`/start "idea"` → working folder)
 - ⚡ ROI: After project #3, agents know your patterns better than documentation
+
+**When NOT to use this:**
+- ❌ One-off quick fixes or simple scripts
+- ❌ Single-tool projects (just dbt, just SQL, etc.)
+- ❌ Ad-hoc data exploration
+- ❌ Projects with <3 files or <1 hour of work
+
+**This framework adds value when:**
+- ✅ Working on 3+ projects per month
+- ✅ Using multiple tools (dbt + warehouse + orchestration + BI)
+- ✅ Building similar things repeatedly (dashboards, pipelines, models)
+- ✅ Working in a team that needs to share patterns
 
 ---
 
@@ -118,6 +132,8 @@ On /complete:
 ✅ Future churn projects now start with YOUR proven pattern
 ```
 
+**[See a real example project →](examples/sample-project/README.md)**
+
 ### The Workflow (Visual)
 
 ```
@@ -161,7 +177,26 @@ cd claude-analytics-framework
 ./setup.sh
 ```
 
-**What setup does:**
+**What setup actually does (and doesn't do):**
+
+✅ **Does:**
+- Asks 4 questions about your data stack
+- Copies relevant agent template files to `.claude/agents/`
+- Creates `.claude/config/tech-stack.json` with your answers
+- Optionally guides MCP server setup (you can skip this)
+
+❌ **Does NOT:**
+- Modify your system settings
+- Install packages globally
+- Change your existing Claude Code configuration in other projects
+- Touch your existing data repositories
+- Require admin/sudo access
+
+**Can you undo it?** Yes. Just delete this directory.
+**Can you change your answers?** Yes. Re-run `./setup.sh` or edit files manually.
+**Safe to test?** Yes. Try in a test directory first if nervous.
+
+**What it asks:**
 
 1. **Checks** you have Claude Code installed (exits with install instructions if not)
 2. **Asks** about your tech stack:
@@ -680,6 +715,60 @@ cat ~/.config/Claude/claude_desktop_config.json
 - Smart context resolution for GitHub operations
 - Automatic owner/repo detection
 - Cross-repo coordination for complex changes
+
+---
+
+## Customization & Extension
+
+**"Can I customize how this works?"** Yes. Everything is configurable.
+
+### Common Customizations
+
+**Change branch naming:**
+```bash
+# Edit scripts/start.sh, line ~42
+BRANCH="feature/${PROJECT_NAME}"  # Change to your convention
+```
+
+**Change project structure:**
+```bash
+# Edit scripts/work-init.sh
+# Modify the template files created in projects/active/
+```
+
+**Add your own agent:**
+```bash
+# Copy a template
+cp .claude/agents/specialists/specialist-template.md .claude/agents/specialists/your-tool-expert.md
+# Edit with your tool's patterns
+```
+
+**Change git workflow:**
+```bash
+# Edit .claude/rules/git-workflow-patterns.md
+# Modify protected branches, naming conventions, etc.
+```
+
+**Update tech stack:**
+```bash
+# Re-run setup or manually edit
+nano .claude/config/tech-stack.json
+```
+
+### What You Should Customize
+
+**Recommended to customize for your team:**
+- `config/repositories.json` → Your actual repository URLs
+- `.claude/config/tech-stack.json` → Your specific tools
+- Agent prompts in `.claude/agents/` → Your team's patterns and standards
+- Branch naming in `scripts/start.sh` → Match your conventions
+
+**Safe to leave as-is:**
+- Core workflow scripts (unless you know what you're doing)
+- Agent architecture (role → specialist delegation)
+- Memory system patterns
+
+**The framework is designed to be extended, not locked in.**
 
 ---
 
