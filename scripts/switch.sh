@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # switch.sh - Seamless project/task switching workflow
-# Usage: ./scripts/switch.sh [optional-new-branch-name]
+# Usage: ./scripts/switch.sh [optional-target-branch-name]
 #
 # This script provides a complete context switch workflow:
-# 1. Commit current work with auto-generated message
-# 2. Push current branch to remote for preservation
-# 3. Switch to main branch and sync
-# 4. Clear Claude Code context
-# 5. Optionally switch to specified branch
+# 1. Save current sub-repo branches to project context.md
+# 2. Commit current work with auto-generated message
+# 3. Push current branch to remote for preservation
+# 4. Switch to main branch and sync (or target branch)
+# 5. Restore target project's sub-repo branches from context.md
 
 set -e
 
@@ -40,6 +40,138 @@ print_header() {
     echo -e "${BLUE}🔄 $1${NC}"
 }
 
+# Function to find project context.md based on branch name
+find_project_context() {
+    local branch_name="$1"
+    # Try to find matching project directory
+    local project_name=$(echo "$branch_name" | sed 's/^feature-//' | sed 's/^feature\///')
+
+    # Check active projects
+    for dir in projects/active/*/; do
+        if [ -f "$dir/context.md" ]; then
+            local dir_name=$(basename "$dir")
+            if [[ "$dir_name" == *"$project_name"* ]] || [[ "$dir_name" == "feature-$project_name" ]]; then
+                echo "$dir/context.md"
+                return 0
+            fi
+        fi
+    done
+    return 1
+}
+
+# Function to get current sub-repo branches
+get_current_repo_branches() {
+    local branches=""
+    local repos_dir="repos"
+
+    if [ -d "$repos_dir" ]; then
+        for repo in "$repos_dir"/*/; do
+            if [ -d "$repo/.git" ] || [ -f "$repo/.git" ]; then
+                local repo_name=$(basename "$repo")
+                pushd "$repo" > /dev/null
+                local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+                popd > /dev/null
+                branches="$branches$repo_name: $branch
+"
+            fi
+        done
+    fi
+    echo "$branches"
+}
+
+# Function to save repo branches to context.md
+save_repo_branches_to_context() {
+    local context_file="$1"
+    local framework_branch="$2"
+
+    if [ ! -f "$context_file" ]; then
+        return 1
+    fi
+
+    # Get current sub-repo branches
+    local sub_repo_branches=$(get_current_repo_branches)
+    local all_branches="framework: $framework_branch
+$sub_repo_branches"
+
+    # Update the REPO_BRANCHES section in context.md
+    if grep -q "REPO_BRANCHES_START" "$context_file"; then
+        # Create temp file with updated content
+        awk -v branches="$all_branches" '
+            /<!-- REPO_BRANCHES_START/ {
+                print;
+                print branches;
+                skip=1;
+                next
+            }
+            /<!-- REPO_BRANCHES_END/ {
+                skip=0
+            }
+            !skip { print }
+        ' "$context_file" > "$context_file.tmp"
+        mv "$context_file.tmp" "$context_file"
+    fi
+}
+
+# Function to read repo branches from context.md
+read_repo_branches_from_context() {
+    local context_file="$1"
+
+    if [ ! -f "$context_file" ]; then
+        return 1
+    fi
+
+    # Extract content between REPO_BRANCHES markers
+    sed -n '/<!-- REPO_BRANCHES_START/,/<!-- REPO_BRANCHES_END/p' "$context_file" | \
+        grep -v "REPO_BRANCHES" | \
+        grep -v "^$"
+}
+
+# Function to switch sub-repos to specified branches
+switch_sub_repos() {
+    local target_branches="$1"
+    local repos_dir="repos"
+
+    if [ -z "$target_branches" ] || [ ! -d "$repos_dir" ]; then
+        return 0
+    fi
+
+    print_info "Switching sub-repository branches..."
+
+    echo "$target_branches" | while IFS=': ' read -r repo_name branch_name; do
+        # Skip framework entry and empty lines
+        if [ "$repo_name" == "framework" ] || [ -z "$repo_name" ] || [ -z "$branch_name" ]; then
+            continue
+        fi
+
+        local repo_path="$repos_dir/$repo_name"
+        branch_name=$(echo "$branch_name" | tr -d '[:space:]')
+
+        if [ -d "$repo_path" ]; then
+            print_info "   $repo_name → $branch_name"
+            pushd "$repo_path" > /dev/null
+
+            # Stash uncommitted changes
+            if ! git diff-index --quiet HEAD -- 2>/dev/null; then
+                git stash push -m "auto-stash during project switch" 2>/dev/null || true
+            fi
+
+            # Switch to branch
+            if git rev-parse --verify "$branch_name" > /dev/null 2>&1; then
+                git checkout "$branch_name" 2>/dev/null
+            elif git ls-remote --exit-code --heads origin "$branch_name" > /dev/null 2>&1; then
+                git checkout -b "$branch_name" "origin/$branch_name" 2>/dev/null
+            else
+                # Branch doesn't exist, stay on current
+                print_warning "   Branch $branch_name not found in $repo_name, staying on current"
+            fi
+
+            popd > /dev/null
+        fi
+    done
+
+    print_status "Sub-repository branches switched"
+}
+
 # Check if we're in a git repository
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
     print_error "Not in a git repository"
@@ -54,6 +186,15 @@ print_info "Current branch: $CURRENT_BRANCH"
 TARGET_BRANCH="$1"
 
 print_header "Starting project/task switch workflow..."
+
+# Step 0: Save current project's sub-repo branches to context.md
+if [[ "$CURRENT_BRANCH" != "main" ]]; then
+    CURRENT_CONTEXT=$(find_project_context "$CURRENT_BRANCH")
+    if [ -n "$CURRENT_CONTEXT" ] && [ -f "$CURRENT_CONTEXT" ]; then
+        print_info "Saving sub-repo branches to: $CURRENT_CONTEXT"
+        save_repo_branches_to_context "$CURRENT_CONTEXT" "$CURRENT_BRANCH"
+    fi
+fi
 
 # Step 1: Check for uncommitted changes
 if ! git diff-index --quiet HEAD --; then
@@ -147,7 +288,44 @@ if [[ -n "$TARGET_BRANCH" ]]; then
     fi
 fi
 
-# Step 5: Clear context and provide guidance
+# Step 5: Switch sub-repos to target project's branches
+FINAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [[ "$FINAL_BRANCH" != "main" ]]; then
+    TARGET_CONTEXT=$(find_project_context "$FINAL_BRANCH")
+    if [ -n "$TARGET_CONTEXT" ] && [ -f "$TARGET_CONTEXT" ]; then
+        print_info "Reading sub-repo branches from: $TARGET_CONTEXT"
+        TARGET_REPO_BRANCHES=$(read_repo_branches_from_context "$TARGET_CONTEXT")
+        if [ -n "$TARGET_REPO_BRANCHES" ]; then
+            switch_sub_repos "$TARGET_REPO_BRANCHES"
+        fi
+    fi
+else
+    # Switching to main - reset sub-repos to their default branches
+    print_info "Switching sub-repos to default branches..."
+    REPOS_DIR="repos"
+    if [ -d "$REPOS_DIR" ]; then
+        for repo in "$REPOS_DIR"/*/; do
+            if [ -d "$repo/.git" ] || [ -f "$repo/.git" ]; then
+                repo_name=$(basename "$repo")
+                pushd "$repo" > /dev/null
+
+                # Stash uncommitted changes
+                if ! git diff-index --quiet HEAD -- 2>/dev/null; then
+                    git stash push -m "auto-stash switching to main" 2>/dev/null || true
+                fi
+
+                # Get default branch
+                DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo "main")
+                git checkout "$DEFAULT_BRANCH" 2>/dev/null || true
+                print_info "   $repo_name → $DEFAULT_BRANCH"
+
+                popd > /dev/null
+            fi
+        done
+    fi
+fi
+
+# Step 6: Clear context and provide guidance
 print_header "Context switching complete!"
 
 echo ""

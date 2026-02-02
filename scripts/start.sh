@@ -219,6 +219,102 @@ fi
 print_color $GREEN "✅ Project structure created"
 echo ""
 
+# Configure sub-repository branches
+print_color $BLUE "🔧 Configuring repository branches..."
+
+# Detect available repos in repos/
+REPOS_DIR="repos"
+AVAILABLE_REPOS=()
+if [ -d "$REPOS_DIR" ]; then
+    for repo in "$REPOS_DIR"/*/; do
+        if [ -d "$repo/.git" ] || [ -f "$repo/.git" ]; then
+            repo_name=$(basename "$repo")
+            AVAILABLE_REPOS+=("$repo_name")
+        fi
+    done
+fi
+
+if [ ${#AVAILABLE_REPOS[@]} -gt 0 ]; then
+    echo ""
+    print_color $BLUE "📦 Found ${#AVAILABLE_REPOS[@]} repositories in repos/:"
+    for i in "${!AVAILABLE_REPOS[@]}"; do
+        echo "   $((i+1)). ${AVAILABLE_REPOS[$i]}"
+    done
+    echo ""
+
+    read -p "Create feature branches in these repos? (y/n/select) [y]: " -r REPO_CHOICE
+    REPO_CHOICE=${REPO_CHOICE:-y}
+
+    SELECTED_REPOS=()
+
+    if [[ "$REPO_CHOICE" =~ ^[Yy]$ ]]; then
+        SELECTED_REPOS=("${AVAILABLE_REPOS[@]}")
+    elif [[ "$REPO_CHOICE" == "select" ]]; then
+        echo "Enter repo numbers (space-separated) or 'none':"
+        read -r SELECTIONS
+        if [[ "$SELECTIONS" != "none" ]]; then
+            for num in $SELECTIONS; do
+                idx=$((num - 1))
+                if [ $idx -ge 0 ] && [ $idx -lt ${#AVAILABLE_REPOS[@]} ]; then
+                    SELECTED_REPOS+=("${AVAILABLE_REPOS[$idx]}")
+                fi
+            done
+        fi
+    fi
+
+    # Create branches and build repo tracking string
+    REPO_BRANCHES="framework: feature-$PROJECT_NAME"
+
+    for repo in "${SELECTED_REPOS[@]}"; do
+        repo_path="$REPOS_DIR/$repo"
+        branch_name="feature/$PROJECT_NAME"
+
+        print_color $BLUE "   Creating branch in $repo..."
+
+        # Save current directory
+        pushd "$repo_path" > /dev/null
+
+        # Stash any uncommitted changes
+        if ! git diff-index --quiet HEAD -- 2>/dev/null; then
+            git stash push -m "auto-stash before branch switch for $PROJECT_NAME" 2>/dev/null || true
+        fi
+
+        # Fetch latest and create branch from default branch
+        git fetch origin 2>/dev/null || true
+        DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo "main")
+
+        # Check if branch already exists
+        if git rev-parse --verify "$branch_name" > /dev/null 2>&1; then
+            git checkout "$branch_name"
+            print_color $GREEN "   ✅ $repo: Switched to existing branch $branch_name"
+        else
+            git checkout -b "$branch_name" "origin/$DEFAULT_BRANCH" 2>/dev/null || git checkout -b "$branch_name"
+            print_color $GREEN "   ✅ $repo: Created branch $branch_name"
+        fi
+
+        popd > /dev/null
+
+        REPO_BRANCHES="$REPO_BRANCHES
+$repo: $branch_name"
+    done
+
+    # Update context.md with repo branches
+    if [ -f "$PROJECT_DIR/context.md" ]; then
+        # Use sed to replace the repo branches section
+        sed -i.bak '/<!-- REPO_BRANCHES_START/,/<!-- REPO_BRANCHES_END/c\
+<!-- REPO_BRANCHES_START - Managed by /start and /switch commands -->\
+'"$(echo "$REPO_BRANCHES" | sed 's/$/\\/')"'
+<!-- REPO_BRANCHES_END -->' "$PROJECT_DIR/context.md"
+        rm -f "$PROJECT_DIR/context.md.bak"
+        print_color $GREEN "✅ Repository branches configured"
+    fi
+else
+    print_color $YELLOW "ℹ️  No repositories found in repos/ - skipping branch setup"
+    echo "   Add repos with: cd repos && git clone <url>"
+fi
+
+echo ""
+
 # Link project to GitHub issue
 print_color $BLUE "🔗 Linking project to GitHub issue..."
 gh issue comment "$ISSUE_NUMBER" --body "## 🚀 Project Started

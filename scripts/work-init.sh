@@ -210,20 +210,12 @@ cat > "$PROJECT_DIR/context.md" << EOF
   - Deployment: After testing and approval
   - Testing: Required before deployment
 
-## Repository Status
+## Repository Branches
+<!-- REPO_BRANCHES_START - Managed by /start and /switch commands -->
+framework: $PROJECT_NAME
+<!-- REPO_BRANCHES_END -->
 
-### da-agent-hub
-- **Branch:** $PROJECT_NAME
-- **Status:** Active work branch
-- **Changes:** Project initialization
-
-### dbt_cloud
-- **Branch:** (none yet)
-- **Status:** (not started)
-- **Changes:** (none)
-
-### Other Repositories
-- **Add other repos as needed**
+*Sub-repo branches will be added when /start configures them.*
 
 ## Active Pull Requests
 
