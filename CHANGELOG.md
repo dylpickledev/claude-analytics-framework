@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Git workflow automation**:
   - Protected branch enforcement
   - Feature branch creation
-  - Git worktree support
+  - Git branch workflow
   - VS Code integration
 - **Comprehensive documentation**:
   - 950+ line README with progressive disclosure

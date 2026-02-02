@@ -80,11 +80,10 @@ claude "I need help with Claude Analytics Framework setup" --agent onboarding-ag
 2. **`/research [text|issue#]`** → Deep exploration and analysis (pre-capture or issue analysis)
 3. **`/start [issue#|"text"]`** → Begin development (from issue OR creates issue from text + starts)
 4. **`/switch [optional-branch]`** → Zero-loss context switching with automated backup
-5. **`/complete [project]`** → Complete and archive projects (closes GitHub issue + cleans up worktree)
+5. **`/complete [project]`** → Complete and archive projects (closes GitHub issue)
 
 ### Support Commands
 6. **`/pause [description]`** → Save conversation context for seamless resumption
-7. **`/setup-worktrees`** → One-time VS Code worktree integration setup
 
 **Note**: For roadmap planning and prioritization, use GitHub's native issue management (labels, milestones, projects).
 
@@ -98,7 +97,6 @@ claude "I need help with Claude Analytics Framework setup" --agent onboarding-ag
 - `/switch` → `./scripts/switch.sh`
 - `/complete` → `./scripts/finish.sh`
 - `/pause` → (Claude-native, no script)
-- `/setup-worktrees` → `./scripts/setup-worktrees.sh`
 
 **Note**: Prefer slash commands for better Claude integration. Scripts can be run directly if needed.
 
@@ -573,9 +571,9 @@ Create separate improvement PRs for:
     ↓ (Use GitHub for prioritization)
 🔬 RESEARCH: /research [text|issue#] → Deep exploration → Feasibility → Technical approach
     ↓ Informed decision-making
-🚀 START: /start [issue#|"text"] → project setup → worktree creation → specialist agents → development
+🚀 START: /start [issue#|"text"] → project setup → branch creation → specialist agents → development
     ↓ Deploy to production
-✅ COMPLETE: /complete → archive → worktree cleanup → close GitHub issue → next iteration
+✅ COMPLETE: /complete → archive → close GitHub issue → next iteration
 ```
 
 ## Additional Resources
@@ -583,6 +581,5 @@ Create separate improvement PRs for:
 **Git Workflows**: `.claude/rules/git-workflow-patterns.md`
 **Testing Patterns**: `.claude/skills/reference-knowledge/testing-patterns/SKILL.md`
 **Cross-System Analysis**: `.claude/skills/reference-knowledge/cross-system-analysis-patterns/SKILL.md`
-**VS Code Worktrees**: `knowledge/da-agent-hub/development/vscode-worktree-integration.md`
 **Agent Definitions**: `.claude/agents/`
 **Platform Documentation**: `knowledge/da-agent-hub/README.md`

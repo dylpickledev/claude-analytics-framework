@@ -138,7 +138,7 @@ Three-tier documentation architecture:
 - `/idea` → GitHub issue creation with auto-labeling
 - `/research` → Deep exploration and feasibility analysis
 - `/roadmap` → Strategic planning from GitHub issues
-- `/start` → Project setup with worktree management
+- `/start` → Project setup with branch management
 - `/complete` → Archive + cleanup + learning extraction
 - `/switch` → Zero-loss context switching
 

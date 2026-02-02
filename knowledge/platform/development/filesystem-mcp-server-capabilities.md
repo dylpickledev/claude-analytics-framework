@@ -776,5 +776,4 @@ This provides interactive testing interface for:
 ## Related Documentation
 
 - `.claude/agents/specialists/github-sleuth-expert.md` - Example agent using filesystem MCP
-- `knowledge/da-agent-hub/development/vscode-worktree-integration.md` - Filesystem operations in context
 - `.claude/skills/reference-knowledge/cross-system-analysis-patterns/SKILL.md` - Multi-tool coordination patterns

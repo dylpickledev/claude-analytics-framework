@@ -87,7 +87,7 @@ claude-analytics-framework/          ← This repo (meta-layer)
 **The workflow:**
 1. **Capture** ideas as GitHub issues (`/idea "build customer dashboard"`)
 2. **Research** complex topics before building (`/research 123` - optional)
-3. **Start** projects with organized folders (`/start 123` - creates structure + git worktree)
+3. **Start** projects with organized folders (`/start 123` - creates structure + git branch)
 4. **Switch** between projects seamlessly (`/switch` - zero-loss context switching)
 5. **Complete** and archive (`/complete project-name` - closes issue, extracts learnings)
 
@@ -239,7 +239,7 @@ claude /research 123  # Analyze issue #123
 ```
 
 ### 3. `/start` - Begin development
-Creates project structure + git worktree
+Creates project structure + git branch
 ```bash
 claude /start 123  # From issue
 claude /start "new project idea"  # Creates issue + starts
@@ -260,7 +260,6 @@ claude /complete feature-project-name
 
 **Bonus Commands:**
 - `/pause [description]` - Save conversation context for seamless resumption
-- `/setup-worktrees` - One-time VS Code worktree integration setup
 
 **Note**: Use GitHub's native issue management, labels, and milestones for roadmap planning and prioritization.
 
@@ -461,16 +460,6 @@ claude auth          # Authenticate with Claude Code
 
 See [.devcontainer/README.md](.devcontainer/README.md) for details.
 
-### VS Code Worktree Integration
-
-For seamless branch switching with dedicated VS Code windows:
-
-```bash
-claude /setup-worktrees  # One-time setup
-```
-
-After setup, `/start` and `/switch` commands automatically open the right VS Code window for each project.
-
 ---
 
 ## Example Workflow
@@ -487,13 +476,13 @@ claude /research 123
 # Specialist agents analyze approach, feasibility, technical details
 # You get a research report before starting
 
-# 3. Start project → folder + git worktree + issue link
+# 3. Start project → folder + git branch + issue link
 claude /start 123
 # Output:
 #   ✅ Created: projects/active/feature-customer-analytics/
 #   ✅ Created branch: feature/customer-analytics
 #   ✅ Linked to issue #123
-#   📝 VS Code opened (if worktree integration setup)
+#   📝 Ready for development
 
 # 4. Work with AI agents
 claude "use analytics-engineer-role to design the data model"
@@ -516,7 +505,6 @@ claude /complete feature-customer-analytics
 #   ✅ Archived to: projects/completed/2025-10/feature-customer-analytics/
 #   ✅ Extracted learnings to memory system
 #   ✅ Closed GitHub issue #123
-#   ✅ Cleaned up git worktree
 #   💡 Agents now know customer analytics patterns for future projects
 ```
 
@@ -580,7 +568,6 @@ Essential scripts (automatically called by slash commands):
 - `switch.sh` → Context switching (called by `/switch`)
 - `finish.sh` → Project completion (called by `/complete`)
 - `work-init.sh` → Project setup (called by start.sh)
-- `setup-worktrees.sh` → VS Code integration (called by `/setup-worktrees`)
 - `pull-all-repos.sh` → Sync multiple repos
 - `get-repo-owner.sh` → Helper utility
 - `idea.sh` → GitHub issue creation utility
@@ -794,16 +781,6 @@ See `knowledge/da-agent-hub/development/agent-development.md` for detailed guida
 
 ## Advanced Features
 
-### VS Code Worktree Integration
-Seamless branch switching with dedicated VS Code windows:
-```bash
-claude /setup-worktrees  # One-time setup
-claude /start 123        # Opens new VS Code window
-claude /switch          # Switches VS Code windows
-```
-
-See `knowledge/da-agent-hub/development/vscode-worktree-integration.md` for details.
-
 ### Multi-Repository Synchronization
 Keep all your data stack repos in sync:
 ```bash
@@ -995,7 +972,7 @@ A: Setup offers to create a custom specialist agent from a template. You fill in
 A: No! MCP is optional. The framework works fine without it - you just get more generic AI advice instead of insights from your live systems.
 
 **Q: Can I use this without GitHub?**
-A: Technically yes, but you'll lose issue tracking and some commands. Git is required (for branches/worktrees).
+A: Technically yes, but you'll lose issue tracking and some commands. Git is required for branch management.
 
 **Q: Does this work with Claude Desktop or just Claude Code CLI?**
 A: Primarily designed for Claude Code CLI. MCP servers can be configured for Claude Desktop, but the slash commands are Claude Code specific.

@@ -46,10 +46,9 @@ if [ -d "$PROJECT_DIR" ]; then
     exit 1
 fi
 
-# Get current branch and ensure we're on main (unless in worktree mode)
-if [ -z "$WORKTREE_MODE" ]; then
-    CURRENT_BRANCH=$(git branch --show-current)
-    if [ "$CURRENT_BRANCH" != "main" ]; then
+# Get current branch and ensure we're on main
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" != "main" ]; then
         echo -e "${YELLOW}Warning: Not on main branch (currently on: $CURRENT_BRANCH)${NC}"
         read -p "Continue anyway? (y/N): " -n 1 -r
         echo
@@ -58,7 +57,6 @@ if [ -z "$WORKTREE_MODE" ]; then
             exit 1
         fi
     fi
-fi
 
 # Create project directory and tasks subdirectory
 mkdir -p "$PROJECT_DIR/tasks"
@@ -264,13 +262,9 @@ cat > "$PROJECT_DIR/context.md" << EOF
 *This file tracks dynamic state - update frequently as work progresses*
 EOF
 
-# Create work branch (skip if in worktree mode - branch already created)
-if [ -z "$WORKTREE_MODE" ]; then
-    echo -e "${GREEN}Creating work branch: $PROJECT_NAME${NC}"
-    git checkout -b "$PROJECT_NAME"
-else
-    echo -e "${GREEN}Using existing worktree branch: $PROJECT_NAME${NC}"
-fi
+# Create work branch
+echo -e "${GREEN}Creating work branch: $PROJECT_NAME${NC}"
+git checkout -b "$PROJECT_NAME"
 
 # Stage all project files
 git add "$PROJECT_DIR/"

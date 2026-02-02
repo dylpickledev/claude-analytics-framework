@@ -64,7 +64,6 @@ You do NOT need to:
 - ❌ Learn all 5 commands
 - ❌ Read specialist agent definitions
 - ❌ Set up GitHub issues (works without them)
-- ❌ Use VS Code worktrees (nice-to-have, not required)
 
 **Start simple. Expand later when you need more.**
 

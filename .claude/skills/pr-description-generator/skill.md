@@ -31,7 +31,7 @@ This skill is invoked when creating a PR or when explicitly requested.
 
 **Determine project location**:
 - If in project directory: Use current directory
-- If in worktree: Identify associated project
+- If on feature branch: Identify associated project
 - Ask user if ambiguous
 
 **Required files**:

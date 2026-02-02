@@ -68,45 +68,6 @@ else
     echo "✅ Project moved to projects/completed/"
 fi
 
-# Worktree cleanup
-WORKTREE_DIR="../da-agent-hub-worktrees/$PROJECT_NAME"
-
-if [ -d "$WORKTREE_DIR" ]; then
-    echo ""
-    echo "🌿 Cleaning up git worktree..."
-
-    # Check if worktree is currently in use (VS Code or other processes)
-    if lsof "$WORKTREE_DIR" > /dev/null 2>&1; then
-        echo "⚠️  Warning: Worktree appears to be in use (VS Code may be open)"
-        echo "   Location: $WORKTREE_DIR"
-        echo ""
-        read -p "Continue with worktree cleanup? (y/n) " -n 1 -r
-        echo
-        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-            echo "   Skipping worktree cleanup"
-            echo "   💡 Manually remove later with: git worktree remove $WORKTREE_DIR --force"
-        else
-            # Force remove worktree
-            git worktree remove "$WORKTREE_DIR" --force 2>/dev/null
-            if [ $? -eq 0 ]; then
-                echo "   ✅ Worktree removed: $WORKTREE_DIR"
-            else
-                echo "   ⚠️  Could not remove worktree automatically"
-                echo "   💡 Close VS Code and run: git worktree remove $WORKTREE_DIR --force"
-            fi
-        fi
-    else
-        # No processes using worktree, safe to remove
-        git worktree remove "$WORKTREE_DIR" 2>/dev/null
-        if [ $? -eq 0 ]; then
-            echo "   ✅ Worktree removed: $WORKTREE_DIR"
-        else
-            echo "   ⚠️  Worktree removal failed, may need manual cleanup"
-            echo "   💡 Run: git worktree remove $WORKTREE_DIR --force"
-        fi
-    fi
-fi
-
 # Check if we're on a feature branch for this project
 CURRENT_BRANCH=$(git branch --show-current)
 if [[ "$CURRENT_BRANCH" == *"$PROJECT_NAME"* ]] || [[ "$CURRENT_BRANCH" == "feature-"* ]]; then

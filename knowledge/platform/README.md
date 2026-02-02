@@ -17,7 +17,6 @@ The Claude ADLC Framework implements the complete [dbt Analytics Development Lif
 **ADLC Develop/Test/Deploy Phases** - Local Development & Project Management
 - **[Agent Development](development/agent-development.md)**: Creating custom specialist agents
 - **[Claude Interactions](development/claude-interactions.md)**: Command reference and best practices
-- **[VS Code Worktree Integration](development/vscode-worktree-integration.md)**: Multi-project workspace management
 - **[Context Switching](development/context-switching-workflows.md)**: Zero-loss context management
 - **[Context Optimization](development/context-optimization.md)**: Token efficiency strategies
 

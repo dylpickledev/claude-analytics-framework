@@ -323,7 +323,7 @@ If HIGH VALUE skill candidates identified:
 1. **Create archive directory**: `projects/completed/YYYY-MM/[project-name]/`
 2. **Move project files**: Complete project structure with full history
 3. **Remove from active**: Clean up `projects/active/[project-name]/`
-4. **Execute finish.sh**: Automatic pattern extraction, GitHub issue closure, worktree cleanup
+4. **Execute finish.sh**: Automatic pattern extraction and GitHub issue closure
 
 ---
 

@@ -145,35 +145,6 @@ if [[ -n "$TARGET_BRANCH" ]]; then
             print_info "Staying on main branch"
         fi
     fi
-
-    # Worktree navigation support
-    WORKTREE_PATH="../da-agent-hub-worktrees/$TARGET_BRANCH"
-
-    if [ -d "$WORKTREE_PATH" ]; then
-        print_info "Worktree detected for $TARGET_BRANCH"
-
-        if command -v code &> /dev/null; then
-            echo ""
-            print_info "🚀 VS Code options:"
-            echo "   • Workspace: $WORKTREE_PATH/*.code-workspace"
-            echo ""
-
-            read -p "Open VS Code for this worktree? (y/n) " -n 1 -r
-            echo
-            if [[ $REPLY =~ ^[Yy]$ ]]; then
-                WORKSPACE_FILE=$(find "$WORKTREE_PATH" -name "*.code-workspace" -maxdepth 1 2>/dev/null | head -n 1)
-                if [ -n "$WORKSPACE_FILE" ]; then
-                    code "$WORKSPACE_FILE"
-                    print_status "VS Code launched with workspace file"
-                else
-                    code "$WORKTREE_PATH"
-                    print_status "VS Code launched for worktree directory"
-                fi
-            else
-                echo "💡 Launch later with: code $WORKTREE_PATH/*.code-workspace"
-            fi
-        fi
-    fi
 fi
 
 # Step 5: Clear context and provide guidance

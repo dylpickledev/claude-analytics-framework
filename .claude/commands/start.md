@@ -26,7 +26,7 @@ claude /start "your idea description"
 ### 3. Complete Project Creation Workflow
 - **Fetches/Creates GitHub issue**: Gets or creates issue with idea details
 - **Creates project structure**: Integrates with `work-init.sh` for full project setup
-- **Creates git worktree**: Isolated development environment (if worktrees configured)
+- **Creates git branch**: Feature branch for development
 - **Links issue to project**: Adds comment to issue with project location
 - **Updates issue labels**: Adds 'in-progress' label to track status
 - **Provides development guidance**: Next steps for implementation
@@ -100,15 +100,6 @@ projects/active/feature-[project-name]/
     ├── current-task.md     # Current agent assignments
     └── [tool]-findings.md  # Detailed agent findings
 ```
-
-## Git Worktree Integration
-If worktrees are configured (via `/setup-worktrees`):
-- **Isolated environment**: Each project gets dedicated worktree
-- **Clean context**: No interference between projects
-- **VS Code integration**: Automatic workspace switching
-- **Branch management**: Feature branches auto-created
-
-*See `knowledge/da-agent-hub/development/vscode-worktree-integration.md` for details*
 
 ## GitHub Integration Features
 
@@ -191,7 +182,7 @@ The start process enables access to:
 ## Success Criteria
 - [ ] GitHub issue fetched/created successfully
 - [ ] Complete project structure created with all required files
-- [ ] Git worktree created (if configured)
+- [ ] Git feature branch created
 - [ ] Issue linked to project with comment and labels
 - [ ] Development guidance provided for next steps
 - [ ] Specialist agent coordination enabled

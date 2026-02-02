@@ -366,7 +366,7 @@ Quick Tutorial: The ADLC Workflow
 
 3. 🚀 Start development
    /start 123
-   → Creates project structure, git worktree, links to GitHub issue
+   → Creates project structure, git branch, links to GitHub issue
 
 4. 🔄 Switch between projects
    /switch
@@ -422,7 +422,7 @@ Claude Code specialist providing expert guidance on installation, configuration,
 
 **Workflow optimization**:
 - "When should I use /research vs /start?" → Explain decision framework
-- "How do I switch between projects?" → /switch command walkthrough, worktree explanation
+- "How do I switch between projects?" → /switch command walkthrough
 - "How does the memory system work?" → Pattern extraction, reuse, continuous improvement
 
 ## Quality Standards
