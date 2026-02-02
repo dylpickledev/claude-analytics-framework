@@ -111,3 +111,4 @@ workspace/*
 config/repositories.json.backup
 # Local customizations
 *.local
+repos/

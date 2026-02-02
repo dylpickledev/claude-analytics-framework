@@ -31,11 +31,6 @@ A framework for analytics teams that combines Claude Code with specialized agent
 - **Context management**: `/switch` for multi-project work, or focus on single projects with full context
 - **Tool-agnostic**: Pre-built for dbt/Snowflake/Tableau, easily extended for your stack
 
-**Not a fit if:**
-- You prefer completely unstructured AI conversations (this adds workflow organization)
-- You don't use Git at all (workflow leverages branches/PRs)
-- You want a SaaS product (this is a framework you run locally)
-
 **Time investment:**
 - ⚡ Setup: 5 minutes (interactive questions about your stack)
 - ⚡ First project: Immediate (`/start "idea"` → working folder)
@@ -59,14 +54,14 @@ claude-analytics-framework/          ← This repo (meta-layer)
 ├── projects/                   ← Active/completed project folders
 │   ├── active/                 ← Current work
 │   └── completed/              ← Archived learnings
+├── repos/                      ← Your actual data repos (gitignored)
+│   ├── dbt_cloud/              ← Your dbt project
+│   ├── data_pipelines/         ← Your pipeline code
+│   └── tableau_workbooks/      ← Your BI dashboards
 └── scripts/                    ← Workflow automation
-
-Your actual data stack repos:     ← Separate repositories
-├── dbt_cloud/                  ← Your dbt project
-├── tableau_dashboards/         ← Your BI work
-├── data_pipelines/             ← Your ETL/orchestration
-└── [any other repos]           ← Any tools you use
 ```
+
+**Key:** The `repos/` folder keeps your work repositories organized in one place. It's gitignored - these repos aren't committed to the framework.
 
 **How it augments your development:**
 
@@ -108,11 +103,14 @@ claude-analytics-framework/
 │       ├── dbt-expert-findings.md      ← Model designs
 │       ├── tableau-expert-findings.md  ← Dashboard layouts
 │       └── data-engineer-findings.md   ← Pipeline setup
-
-Changes coordinated across your repos:
-├── ../dbt_cloud/models/marts/customer_churn.sql       (new model)
-├── ../data_pipelines/prefect/churn_refresh.py         (new pipeline)
-└── ../tableau_dashboards/churn_dashboard.twb          (new dashboard)
+│
+└── repos/                              ← Your actual repos
+    ├── dbt_cloud/
+    │   └── models/marts/customer_churn.sql     (new model)
+    ├── data_pipelines/
+    │   └── prefect/churn_refresh.py            (new pipeline)
+    └── tableau_workbooks/
+        └── churn_dashboard.twb                  (new dashboard)
 
 On /complete:
 ✅ All changes committed to respective repos
