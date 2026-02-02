@@ -144,17 +144,9 @@ On /complete:
 
 ### Never used Claude Code?
 
-Claude Code is Anthropic's official AI coding assistant that runs in your terminal:
+Claude Code is Anthropic's official AI coding assistant that runs in your terminal.
 
-```bash
-# Install Claude Code (macOS/Linux)
-curl -fsSL https://claude.com/install.sh | sh
-
-# Authenticate
-claude auth
-```
-
-See the [Claude Code docs](https://docs.claude.com/en/docs/claude-code) for Windows installation or troubleshooting.
+**Installation:** Follow the [official installation guide](https://docs.claude.com/en/docs/claude-code/installation)
 
 ### Installation
 
@@ -638,14 +630,7 @@ chmod +x scripts/*.sh
 ```
 
 ### "Command not found: claude"
-You need to install Claude Code first:
-```bash
-# macOS/Linux
-curl -fsSL https://claude.com/install.sh | sh
-
-# Then authenticate
-claude auth
-```
+You need to install Claude Code first. Follow the [official installation guide](https://docs.claude.com/en/docs/claude-code/installation).
 
 See the [Claude Code docs](https://docs.claude.com/en/docs/claude-code) for Windows installation.
 
@@ -960,10 +945,10 @@ Built for data/analytics engineers who want AI that understands their modern dat
 ## Get Started
 
 ```bash
-# Install Claude Code (if you haven't)
-curl -fsSL https://claude.com/install.sh | sh
+# 1. Install Claude Code first (if you haven't)
+# https://docs.claude.com/en/docs/claude-code/installation
 
-# Clone and setup
+# 2. Clone and setup
 git clone https://github.com/dylpickledev/claude-analytics-framework.git
 cd claude-analytics-framework
 ./setup.sh
