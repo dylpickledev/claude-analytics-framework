@@ -1,0 +1,17 @@
+{
+  "transformation": {
+    "tool": "dbt_cloud",
+    "version": "1.8",
+    "plan": "team"
+  },
+  "warehouse": {
+    "platform": "snowflake"
+  },
+  "orchestration": {
+    "tool": "prefect"
+  },
+  "bi": {
+    "tool": "tableau"
+  },
+  "configured_at": "2025-10-21T10:30:00Z"
+}

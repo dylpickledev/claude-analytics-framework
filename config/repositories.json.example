@@ -1,0 +1,123 @@
+{
+  "_comment": "Repository configuration for Claude ADLC Framework. Copy to repositories.json and customize for your organization.",
+  "_setup_instructions": "1. Copy this file to repositories.json, 2. Replace 'your-org' with your GitHub organization, 3. Update URLs to match your data stack repositories",
+  "settings": {
+    "clone_method": "https",
+    "update_existing": true,
+    "check_git_access": true
+  },
+  "knowledge": {
+    "claude_adlc_framework": {
+      "url": "https://github.com/your-org/claude-adlc-framework.git",
+      "branch": "main",
+      "description": "Claude ADLC Framework - Analytics Development Lifecycle AI Platform"
+    },
+    "da_team_documentation": {
+      "url": "https://github.com/your-org/da-team-documentation.git",
+      "branch": "main",
+      "description": "Data & Analytics team documentation - data architecture, integrations, products, and templates"
+    },
+    "da_obsidian": {
+      "url": "https://github.com/your-org/da-obsidian.git",
+      "branch": "master",
+      "description": "Data & Analytics team Obsidian knowledge management vault - raw notes and unrefined ideas"
+    }
+  },
+  "data_stack": {
+    "_comment": "Organized data stack repositories by functional layer - customize for your tools",
+    "orchestration": {
+      "orchestra": {
+        "url": "https://github.com/your-org/orchestra.git",
+        "branch": "master",
+        "description": "Primary orchestration system - kicks off and manages workflow executions",
+        "folder": "repos/orchestration"
+      },
+      "prefect": {
+        "url": "https://github.com/your-org/prefect-flows.git",
+        "branch": "master",
+        "description": "Prefect workflow repository",
+        "folder": "repos/orchestration"
+      }
+    },
+    "ingestion": {
+      "etl_pipelines": {
+        "url": "https://github.com/your-org/etl-pipelines.git",
+        "branch": "main",
+        "description": "Data ingestion and ETL pipelines",
+        "folder": "repos/ingestion"
+      },
+      "dlthub_pipelines": {
+        "url": "https://github.com/your-org/dlt-pipelines.git",
+        "branch": "master",
+        "description": "dlt-hub data ingestion pipelines to data warehouse",
+        "folder": "repos/ingestion"
+      }
+    },
+    "transformation": {
+      "dbt_cloud": {
+        "url": "https://github.com/your-org/dbt-project.git",
+        "branch": "main",
+        "description": "Main dbt transformation project",
+        "folder": "repos/transformation"
+      }
+    },
+    "front_end": {
+      "streamlit_apps": {
+        "url": "https://github.com/your-org/streamlit-apps.git",
+        "branch": "master",
+        "description": "Streamlit applications for data visualization",
+        "folder": "repos/front_end"
+      },
+      "tableau": {
+        "url": "local",
+        "branch": "main",
+        "description": "Tableau dashboard configurations and workbooks",
+        "folder": "repos/front_end"
+      },
+      "react_apps": {
+        "url": "https://github.com/your-org/react-data-apps.git",
+        "branch": "master",
+        "description": "React-based data applications",
+        "folder": "repos/front_end"
+      }
+    },
+    "operations": {
+      "monitoring": {
+        "url": "https://github.com/your-org/data-monitoring.git",
+        "branch": "master",
+        "description": "Data quality monitoring and alerting",
+        "folder": "repos/operations"
+      },
+      "investigation": {
+        "url": "https://github.com/your-org/data-investigation.git",
+        "branch": "main",
+        "description": "Data quality and pipeline issue investigation tools",
+        "folder": "repos/operations"
+      }
+    }
+  },
+  "orchestration_context": {
+    "_comment": "Workflow orchestration context - customize for your environment",
+    "workspace": "your-org/your-workspace",
+    "environment": "production",
+    "source_repositories": [
+      "orchestra",
+      "prefect",
+      "etl_pipelines"
+    ],
+    "work_pools": [
+      "production",
+      "staging"
+    ],
+    "key_flows": [
+      "dbt-orchestrator",
+      "airbyte-sync",
+      "data-quality-checks"
+    ],
+    "integration_patterns": [
+      "dbt Cloud coordination",
+      "Airbyte data ingestion",
+      "External API orchestration"
+    ]
+  }
+}

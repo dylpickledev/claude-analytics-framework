@@ -1,0 +1,10 @@
+# Personal analysis results - not committed to repository
+# Each developer's chat analysis stays local for privacy
+
+*_analysis_*.md
+*_recommendations_*.md
+*.json
+
+# Only allow this gitignore and README
+!.gitignore
+!README.md

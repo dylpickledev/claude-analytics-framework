@@ -1,0 +1,115 @@
+{
+  "version": "1.0",
+  "description": "Tool access restrictions for DA Agent Hub sub-agents following Claude Code best practices",
+  "last_updated": "2025-01-08",
+  "tool_restrictions": {
+    "dbt-expert": {
+      "allowed_tools": [
+        "Read", "Grep", "Glob", "WebFetch", "TodoWrite", "Task", "ExitPlanMode",
+        "mcp__dbt-mcp__*", "mcp__dbt__*"
+      ],
+      "denied_tools": [
+        "Bash", "BashOutput", "KillBash", "Write", "Edit", "MultiEdit", "NotebookEdit",
+        "mcp__freshservice-mcp__*", "mcp__atlassian__*", "mcp__ide__*"
+      ],
+      "rationale": "dbt domain specialist - needs only dbt analysis tools and file reading capabilities",
+      "risk_level": "low"
+    },
+    "snowflake-expert": {
+      "allowed_tools": [
+        "Read", "Grep", "Glob", "WebFetch", "TodoWrite", "Task", "ExitPlanMode",
+        "mcp__dbt-mcp__show", "mcp__dbt__show", "mcp__dbt-mcp__get_metrics_compiled_sql", "mcp__dbt__get_metrics_compiled_sql"
+      ],
+      "denied_tools": [
+        "Bash", "BashOutput", "KillBash", "Write", "Edit", "MultiEdit", "NotebookEdit",
+        "mcp__freshservice-mcp__*", "mcp__atlassian__*", "mcp__ide__*"
+      ],
+      "rationale": "Database optimization specialist - needs query analysis from dbt but no other MCP tools",
+      "risk_level": "low"
+    },
+    "tableau-expert": {
+      "allowed_tools": [
+        "Read", "Grep", "Glob", "WebFetch", "TodoWrite", "Task", "ExitPlanMode"
+      ],
+      "denied_tools": [
+        "Bash", "BashOutput", "KillBash", "Write", "Edit", "MultiEdit", "NotebookEdit",
+        "mcp__dbt-mcp__*", "mcp__dbt__*", "mcp__freshservice-mcp__*", "mcp__atlassian__*", "mcp__ide__*"
+      ],
+      "rationale": "BI specialist - focused on dashboard analysis, no database or project management tools needed",
+      "risk_level": "low",
+      "note": "Will gain tableau-mcp tools when MCP server becomes available"
+    },
+    "business-context": {
+      "allowed_tools": [
+        "Read", "Grep", "Glob", "WebFetch", "TodoWrite", "Task", "ExitPlanMode",
+        "mcp__atlassian__*", "mcp__freshservice-mcp__*"
+      ],
+      "denied_tools": [
+        "Bash", "BashOutput", "KillBash", "Write", "Edit", "MultiEdit", "NotebookEdit",
+        "mcp__dbt-mcp__*", "mcp__dbt__*", "mcp__ide__*"
+      ],
+      "rationale": "Business analysis specialist - needs project management and service tools but no technical implementation tools",
+      "risk_level": "medium"
+    },
+    "orchestra-expert": {
+      "allowed_tools": [
+        "Read", "Grep", "Glob", "WebFetch", "TodoWrite", "Task", "ExitPlanMode",
+        "mcp__dbt-mcp__get_model_details", "mcp__dbt__get_model_details",
+        "mcp__dbt-mcp__get_model_parents", "mcp__dbt__get_model_parents",
+        "mcp__dbt-mcp__get_model_children", "mcp__dbt__get_model_children"
+      ],
+      "denied_tools": [
+        "Bash", "BashOutput", "KillBash", "Write", "Edit", "MultiEdit", "NotebookEdit",
+        "mcp__freshservice-mcp__*", "mcp__atlassian__*", "mcp__ide__*"
+      ],
+      "rationale": "Pipeline orchestration specialist - limited dbt access for downstream impact analysis only",
+      "risk_level": "low"
+    },
+    "dlthub-expert": {
+      "allowed_tools": [
+        "Read", "Grep", "Glob", "WebFetch", "TodoWrite", "Task", "ExitPlanMode",
+        "mcp__dbt-mcp__get_model_details", "mcp__dbt__get_model_details",
+        "mcp__dbt-mcp__get_model_parents", "mcp__dbt__get_model_parents"
+      ],
+      "denied_tools": [
+        "Bash", "BashOutput", "KillBash", "Write", "Edit", "MultiEdit", "NotebookEdit",
+        "mcp__freshservice-mcp__*", "mcp__atlassian__*", "mcp__ide__*"
+      ],
+      "rationale": "Data ingestion specialist - limited dbt access for schema impact analysis only",
+      "risk_level": "low"
+    },
+    "da-architect": {
+      "allowed_tools": ["*"],
+      "denied_tools": [],
+      "rationale": "System architecture specialist - needs full visibility for strategic decisions across entire data stack",
+      "risk_level": "high"
+    }
+  },
+  "global_restrictions": {
+    "research_only_agents": [
+      "dbt-expert", "snowflake-expert", "tableau-expert", 
+      "orchestra-expert", "dlthub-expert", "business-context"
+    ],
+    "universal_denied_tools": [
+      "Bash", "BashOutput", "KillBash",
+      "Write", "Edit", "MultiEdit", 
+      "NotebookEdit", "mcp__ide__executeCode"
+    ],
+    "universal_allowed_tools": [
+      "Read", "Grep", "Glob", "WebFetch", "TodoWrite", "Task", "ExitPlanMode"
+    ]
+  },
+  "implementation": {
+    "phase": "documentation",
+    "status": "ready_for_testing",
+    "rollout_strategy": "gradual_by_agent",
+    "monitoring": "track_restricted_tool_usage_attempts"
+  },
+  "benefits": [
+    "Improved safety - research agents cannot execute dangerous commands",
+    "Enhanced performance - smaller tool context reduces startup time",
+    "Better focus - agents work within their domain expertise",
+    "Clear boundaries - tool restrictions reinforce agent roles",
+    "Claude Code alignment - follows focused, efficient agent patterns"
+  ]
+}
