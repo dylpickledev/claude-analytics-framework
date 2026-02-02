@@ -16,24 +16,25 @@ A framework for analytics teams that combines Claude Code with specialized agent
 
 ## TL;DR - Is This For You?
 
-**You'll love this if you're frustrated by:**
-- 🔀 **Scattered work** across dbt repos, pipeline code, BI dashboards with no coordination
-- 🤖 **Generic AI advice** that doesn't know your dbt patterns, warehouse setup, or BI standards
-- 🧠 **Lost context** when switching between customer analytics → fraud detection → cost optimization projects
-- 📝 **Tribal knowledge** stuck in people's heads instead of captured for the team
-- 🔁 **Repetitive explanations** - every new team member asks the same questions about your data models
+**You'll love this if you want:**
+- 🤖 **AI agents specialized for YOUR stack** - knows your dbt patterns, warehouse setup, BI standards
+- 📂 **Organized project workflow** - structured folders, clear documentation, automated git workflow
+- 🔗 **Coordinated cross-repo changes** - one project manages dbt + warehouse + BI changes together
+- 📝 **Team knowledge capture** - patterns extracted automatically, new team members get your expertise
+- 🔌 **Live system integration** - MCP servers connect to dbt Cloud, Snowflake, GitHub for real-time context
+- ⚡ **Workflow automation** - `/capture` → `/research` → `/start` → `/complete` commands guide your process
 
-**What you get:**
-- **One project coordinates dbt + warehouse + BI changes** - no more juggling scattered repos
-- **AI that learns YOUR patterns** - after 3-5 projects, knows your incremental strategies, naming conventions, testing standards
-- **Zero-loss context switching** - `/switch` saves everything, pick up exactly where you left off
-- **Automatic knowledge capture** - patterns extracted when you `/complete`, new team members get your expertise
-- **Works with any tools** - pre-built agents for dbt/Snowflake/Tableau, create custom for yours
+**What makes it different:**
+- **Specialized agents**: Not generic AI - agents configured for your specific tools and patterns
+- **Learning system**: After 3-5 projects, knows your incremental strategies, naming conventions, testing standards
+- **Structured workflow**: Project organization, branch management, PR creation built-in
+- **Context management**: `/switch` for multi-project work, or focus on single projects with full context
+- **Tool-agnostic**: Pre-built for dbt/Snowflake/Tableau, easily extended for your stack
 
 **Not a fit if:**
-- You only work on one thing at a time (no context switching → less value)
-- You prefer unstructured Claude chats (this adds project organization)
-- You don't use Git (workflow depends on branches/PRs)
+- You prefer completely unstructured AI conversations (this adds workflow organization)
+- You don't use Git at all (workflow leverages branches/PRs)
+- You want a SaaS product (this is a framework you run locally)
 
 **Time investment:**
 - ⚡ Setup: 5 minutes (interactive questions about your stack)
