@@ -111,4 +111,5 @@ workspace/*
 config/repositories.json.backup
 # Local customizations
 *.local
-repos/
+repos/*
+!repos/README.md
