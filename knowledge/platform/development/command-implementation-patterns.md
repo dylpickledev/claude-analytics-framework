@@ -394,7 +394,7 @@ main() {
 
 ### Core ADLC Commands
 **Purpose**: Direct support for Analytics Development Lifecycle
-- **Planning**: `/capture`, `/roadmap`, `/organize`
+- **Planning**: `/idea`, `/roadmap`, `/organize`
 - **Development**: `/build`, `/develop`, `/coordinate`
 - **Operations**: `/monitor`, `/analyze`, `/optimize`
 - **Completion**: `/complete`, `/archive`, `/switch`

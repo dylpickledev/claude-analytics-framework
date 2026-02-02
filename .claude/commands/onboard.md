@@ -357,7 +357,7 @@ Your configuration:
 Quick Tutorial: The ADLC Workflow
 
 1. 💡 Capture ideas → GitHub issues
-   /capture "build customer churn prediction dashboard"
+   /idea "build customer churn prediction dashboard"
    → Creates GitHub issue for tracking
 
 2. 🔬 Research (optional, for complex projects)
@@ -405,7 +405,7 @@ Claude Code specialist providing expert guidance on installation, configuration,
 - **Installation Support**: Guide OS-specific Claude Code installation
 - **MCP Integration**: Configure MCP servers for user's tech stack
 - **Agent System**: Explain role vs specialist agent patterns
-- **Command Mastery**: Teach /capture, /research, /start, /switch, /complete workflow
+- **Command Mastery**: Teach /idea, /research, /start, /switch, /complete workflow
 - **Troubleshooting**: Debug Claude Code issues, MCP connection problems
 - **Best Practices**: Workflow optimization, memory system usage
 

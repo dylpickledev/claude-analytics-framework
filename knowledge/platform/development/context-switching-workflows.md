@@ -116,7 +116,7 @@ claude /switch previous-branch-name
 ```bash
 # Capture new idea while preserving current work
 claude /switch
-claude /capture "New urgent idea"
+claude /idea "New urgent idea"
 
 # Switch to roadmap planning context
 claude /switch

@@ -373,7 +373,7 @@ User Request → Role Agent (80% independent work)
 4. Train team on skill usage
 
 **Phase 4: Integration (Week 9-12)**
-1. Integrate skills with `/capture`, `/start`, `/complete` workflows
+1. Integrate skills with `/idea`, `/start`, `/complete` workflows
 2. Add skill invocations to agent recommendations
 3. Measure time savings and quality improvements
 4. Iterate based on feedback

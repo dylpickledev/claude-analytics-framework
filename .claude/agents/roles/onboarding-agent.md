@@ -98,7 +98,7 @@ DA Agent Hub onboarding and support specialist. Helps new users get set up, unde
 
 **Essential Commands** (teach in order):
 1. `/mcp` - Verify MCP servers loaded
-2. `/capture "[idea]"` - Quick idea capture as GitHub issue
+2. `/idea "[idea]"` - Quick idea capture as GitHub issue
 3. `/start [issue#]` - Begin development from issue
 4. `/complete` - Finish and archive project
 
@@ -138,15 +138,15 @@ DA Agent Hub onboarding and support specialist. Helps new users get set up, unde
 
 **Reference**: `docs/troubleshooting-mcp.md`
 
-### Issue 2: "I don't understand when to use /capture vs /start"
+### Issue 2: "I don't understand when to use /idea vs /start"
 
 **Explanation**:
-- `/capture "[idea]"` - Quick idea capture as GitHub issue (lightweight, no project setup)
+- `/idea "[idea]"` - Quick idea capture as GitHub issue (lightweight, no project setup)
 - `/start [issue#]` - Begin development with full project structure (spec.md, context.md, tasks/)
 
 **Rule of thumb**:
 - Small task or question? Just ask Claude directly
-- Need to track idea? `/capture`
+- Need to track idea? `/idea`
 - Ready to implement? `/start`
 - Multi-day project? Definitely `/start`
 
@@ -305,7 +305,7 @@ claude /mcp
 claude "List my dbt Cloud jobs"
 
 # Start ADLC workflow
-claude /capture "[idea]"
+claude /idea "[idea]"
 claude /start [issue#]
 claude /complete
 ```

@@ -5,7 +5,7 @@
 This folder contains documentation for the ADLC Plan phase workflows:
 
 ## Key Workflows
-- **Idea Capture**: `./scripts/capture.sh` and `/capture` command
+- **Idea Capture**: `./scripts/idea.sh` and `/idea` command
 - **Strategic Planning**: `./scripts/roadmap.sh` and `/roadmap` command
 - **Business case validation** and impact analysis
 - **Stakeholder feedback** integration

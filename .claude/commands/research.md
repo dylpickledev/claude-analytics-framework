@@ -23,7 +23,7 @@ claude /research <issue-number>
 3. Identifies potential challenges and alternatives
 4. Presents comprehensive findings interactively
 5. **Asks user**: "Should I capture this as a GitHub issue?"
-   - If yes → Creates issue via `capture.sh`
+   - If yes → Creates issue via `idea.sh`
    - If no → Discussion ends, no issue created
 
 **Output**: Interactive discussion with specialist insights
@@ -88,7 +88,7 @@ When user runs `/research "topic text"`:
 4. **Present findings**: Comprehensive but concise summary
 5. **Offer capture**: "Should I capture this as a GitHub issue?"
    - Wait for user response
-   - If "yes": Run `./scripts/capture.sh "[topic]"`
+   - If "yes": Run `./scripts/idea.sh "[topic]"`
    - If "no": End discussion
 
 **Response Format**:
@@ -218,7 +218,7 @@ When posting to GitHub issues, use this structure:
     ↓
 🔬 /research "topic" → Deep analysis
     ↓ Decision point
-💡 /capture "topic" → Create issue (or captured during research)
+💡 /idea "topic" → Create issue (or captured during research)
     ↓
 🗺️ Use GitHub for prioritization
     ↓
@@ -229,11 +229,11 @@ When posting to GitHub issues, use this structure:
 ✅ /complete → Finish project
 ```
 
-## When to Use /research vs /capture
+## When to Use /research vs /idea
 
 | Scenario | Use |
 |----------|-----|
-| Quick thought, obvious value | `/capture` directly |
+| Quick thought, obvious value | `/idea` directly |
 | Complex idea, unclear feasibility | `/research` first, then decide |
 | Existing issue needs analysis | `/research <issue#>` |
 | Strategic planning session | `/research` multiple topics |

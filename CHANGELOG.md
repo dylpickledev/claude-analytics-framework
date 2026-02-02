@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Initial public release** of claude-analytics-framework
-- **5-command workflow**: `/capture`, `/research`, `/start`, `/switch`, `/complete`
+- **5-command workflow**: `/idea`, `/research`, `/start`, `/switch`, `/complete`
 - **Interactive onboarding**: `/onboard` command for stack-specific setup
 - **4 production skills**:
   - `project-setup`: Initialize new projects with standard structure

@@ -32,7 +32,7 @@ Get started with DA Agent Hub in seconds using VS Code devcontainers.
 
 4. **Start using**:
    ```bash
-   claude /capture "Build my first data pipeline"
+   claude /idea "Build my first data pipeline"
    ```
 
 ## What's Included

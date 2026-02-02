@@ -76,7 +76,7 @@ claude "I need help with Claude Analytics Framework setup" --agent onboarding-ag
 ## Simplified Workflow Commands
 
 ### Essential Commands (Use Slash Commands)
-1. **`/capture "[idea]"`** → Quick idea capture (creates GitHub issues)
+1. **`/idea "[idea]"`** → Quick idea capture (creates GitHub issues)
 2. **`/research [text|issue#]`** → Deep exploration and analysis (pre-capture or issue analysis)
 3. **`/start [issue#|"text"]`** → Begin development (from issue OR creates issue from text + starts)
 4. **`/switch [optional-branch]`** → Zero-loss context switching with automated backup
@@ -92,7 +92,7 @@ claude "I need help with Claude Analytics Framework setup" --agent onboarding-ag
 - **`/build`** → Use `/start` instead
 
 ### Underlying Scripts (Called by Slash Commands)
-- `/capture` → `./scripts/capture.sh`
+- `/idea` → `./scripts/idea.sh`
 - `/research` → `./scripts/research.sh`
 - `/start` → `./scripts/start.sh`
 - `/switch` → `./scripts/switch.sh`
@@ -569,7 +569,7 @@ Create separate improvement PRs for:
 ## Complete Development Workflow
 
 ```
-💡 CAPTURE: /capture → GitHub issue creation
+💡 CAPTURE: /idea → GitHub issue creation
     ↓ (Use GitHub for prioritization)
 🔬 RESEARCH: /research [text|issue#] → Deep exploration → Feasibility → Technical approach
     ↓ Informed decision-making

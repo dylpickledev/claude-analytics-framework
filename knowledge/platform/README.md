@@ -80,7 +80,7 @@ This documentation suite provides:
 Start with the [main project README](../../README.md) to understand the system's value proposition and ADLC workflow.
 
 ### If You're Ready to Use It
-Review [Claude Interaction Guide](development/claude-interactions.md) for slash commands, then start with `/capture` to manage ideas.
+Review [Claude Interaction Guide](development/claude-interactions.md) for slash commands, then start with `/idea` to manage ideas.
 
 ### If You're Experiencing Issues
 Go directly to [Troubleshooting Guide](operations/troubleshooting.md) or [Dashboard Troubleshooting](operations/troubleshooting-blank-dashboards.md) for specific problems.

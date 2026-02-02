@@ -168,7 +168,7 @@ claude "Show me my most expensive Snowflake queries this week"
 
 **Use Case 3**: "Build new models faster"
 ```bash
-claude "/capture 'Create fact_daily_sales model'"
+claude "/idea 'Create fact_daily_sales model'"
 claude "/start [issue-number]"
 # analytics-engineer-role will scaffold the model with best practices
 ```

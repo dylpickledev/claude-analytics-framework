@@ -5,7 +5,7 @@
 A framework for analytics teams that combines Claude Code with specialized agents, patterns, and MCP integrations for your data stack.
 
 **What you get:**
-- 5 slash commands for project lifecycle (`/capture` → `/research` → `/start` → `/switch` → `/complete`)
+- 5 slash commands for project lifecycle (`/idea` → `/research` → `/start` → `/switch` → `/complete`)
 - AI agents created based on YOUR tools (setup asks what you use)
 - Optional live system access via MCP servers
 - Automatic learning from completed projects
@@ -22,7 +22,7 @@ A framework for analytics teams that combines Claude Code with specialized agent
 - 🔗 **Coordinated cross-repo changes** - one project manages dbt + warehouse + BI changes together
 - 📝 **Team knowledge capture** - patterns extracted automatically, new team members get your expertise
 - 🔌 **Live system integration** - MCP servers connect to dbt Cloud, Snowflake, GitHub for real-time context
-- ⚡ **Workflow automation** - `/capture` → `/research` → `/start` → `/complete` commands guide your process
+- ⚡ **Workflow automation** - `/idea` → `/research` → `/start` → `/complete` commands guide your process
 
 **What makes it different:**
 - **Specialized agents**: Not generic AI - agents configured for your specific tools and patterns
@@ -49,7 +49,7 @@ Think of it as a control center sitting alongside your existing repositories (db
 claude-analytics-framework/          ← This repo (meta-layer)
 ├── .claude/                    ← AI agents + commands
 │   ├── agents/                 ← Specialists for YOUR tools
-│   ├── commands/               ← /capture, /start, /complete, etc.
+│   ├── commands/               ← /idea, /start, /complete, etc.
 │   └── config/                 ← Your tech stack configuration
 ├── projects/                   ← Active/completed project folders
 │   ├── active/                 ← Current work
@@ -71,7 +71,7 @@ claude-analytics-framework/          ← This repo (meta-layer)
 4. **Knowledge accumulation**: As you complete projects, the framework learns your patterns and improves recommendations
 
 **The workflow:**
-1. **Capture** ideas as GitHub issues (`/capture "build customer dashboard"`)
+1. **Capture** ideas as GitHub issues (`/idea "build customer dashboard"`)
 2. **Research** complex topics before building (`/research 123` - optional)
 3. **Start** projects with organized folders (`/start 123` - creates structure + git worktree)
 4. **Switch** between projects seamlessly (`/switch` - zero-loss context switching)
@@ -122,7 +122,7 @@ On /complete:
 
 ```
 💡 Idea
-  ↓ /capture
+  ↓ /idea
 📋 GitHub Issue #123
   ↓ /research (optional)
 🔬 Research Report
@@ -198,10 +198,10 @@ claude /start "your first project idea"
 
 ## The 5 Commands
 
-### 1. `/capture` - Capture ideas
+### 1. `/idea` - Capture ideas
 Creates GitHub issues for data initiatives
 ```bash
-claude /capture "Optimize Snowflake costs"
+claude /idea "Optimize Snowflake costs"
 ```
 
 ### 2. `/research` - Deep exploration
@@ -452,7 +452,7 @@ Here's what a typical project looks like:
 
 ```bash
 # 1. Capture idea → GitHub issue
-claude /capture "Build customer analytics dashboard"
+claude /idea "Build customer analytics dashboard"
 # Output: ✅ Created issue #123
 
 # 2. Research (optional - for complex projects)
@@ -547,7 +547,7 @@ claude /complete feature-customer-analytics
 ## Core Scripts
 
 Essential scripts (automatically called by slash commands):
-- `capture.sh` → Creates GitHub issues (called by `/capture`)
+- `idea.sh` → Creates GitHub issues (called by `/idea`)
 - `start.sh` → Project initialization (called by `/start`)
 - `research.sh` → Research helper (called by `/research`)
 - `switch.sh` → Context switching (called by `/switch`)

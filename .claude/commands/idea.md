@@ -1,18 +1,18 @@
-# /capture Command Protocol
+# /idea Command Protocol
 
 ## Purpose
 Quick idea capture using GitHub Issues for ADLC Plan phase. Creates trackable GitHub issues that connect ideation directly to project execution.
 
 ## Usage
 ```bash
-claude /capture "idea description"
+claude /idea "idea description"
 ```
 
 ## Protocol
 
-### 1. Execute capture.sh Script
+### 1. Execute idea.sh Script
 ```bash
-./scripts/capture.sh "[idea]"
+./scripts/idea.sh "[idea]"
 ```
 
 ### 2. Automatic GitHub Issue Creation
@@ -23,9 +23,9 @@ claude /capture "idea description"
 
 ## Claude Instructions
 
-When user runs `/capture [idea]`:
+When user runs `/idea [idea]`:
 
-1. **Execute the script**: Run `./scripts/capture.sh "[idea]"`
+1. **Execute the script**: Run `./scripts/idea.sh "[idea]"`
 2. **Monitor output**: Display script progress and GitHub issue creation
 3. **Provide guidance**: Show next steps from script output
 
@@ -66,19 +66,19 @@ When user runs `/capture [idea]`:
 
 ### Example 1: BI Dashboard Idea
 ```bash
-claude /capture "Create executive KPI dashboard with real-time metrics"
+claude /idea "Create executive KPI dashboard with real-time metrics"
 # → Creates issue with labels: idea, bi-analytics
 ```
 
 ### Example 2: Data Engineering Idea
 ```bash
-claude /capture "Implement real-time customer data pipeline from Salesforce"
+claude /idea "Implement real-time customer data pipeline from Salesforce"
 # → Creates issue with labels: idea, data-engineering
 ```
 
 ### Example 3: Architecture Idea
 ```bash
-claude /capture "Evaluate Snowflake cost optimization strategies"
+claude /idea "Evaluate Snowflake cost optimization strategies"
 # → Creates issue with labels: idea, architecture
 ```
 
@@ -86,7 +86,7 @@ claude /capture "Evaluate Snowflake cost optimization strategies"
 
 ### From Idea Capture to Project
 ```
-/capture → GitHub Issue Created (#123)
+/idea → GitHub Issue Created (#123)
     ↓
 /research 123 → Deep analysis (optional)
     ↓
