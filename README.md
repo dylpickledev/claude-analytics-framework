@@ -87,7 +87,7 @@ claude-analytics-framework/          <-- This repo (the control center)
 
 ## See It in Action: Tired Dad vs. Claude
 
-I gave a live demo at a data@AMA session where I raced Claude through three real-world tasks from our dbt project. Three rounds, two contestants: Claude (with agents, skills, and the dbt MCP) versus me (brain fueled by caffeine, ChatGPT, and dbt Catalog).
+I used this repo in a live demo at a data@AMA session -- not a project built for the demo, just how I actually work. I raced Claude through three real-world tasks from our dbt project. Three rounds, two contestants: Claude (with agents, skills, and the dbt MCP) versus me (brain fueled by caffeine, ChatGPT, and dbt Catalog).
 
 | Round | Task | Who Won | What Happened |
 |---|---|---|---|

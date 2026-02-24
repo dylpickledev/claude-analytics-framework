@@ -1,6 +1,6 @@
 # Tired Dad vs. Claude -- Live Demo
 
-This demo was part of a data@AMA presentation called "What if Claude was one of us?" where I raced Claude through three real-world tasks against our production dbt project at Graniterock.
+I gave a data@AMA presentation called "What if Claude was one of us?" and used this repo -- the same one I use day-to-day -- to race Claude through three real-world tasks against our production dbt project at Graniterock. Nothing was built for the demo; this is just how I work.
 
 **Starting model:** `dm_master__tickets` -- our main sales data mart. A ticket is the receipt a trucker gets when they pull off with 25 tons of rock.
 
