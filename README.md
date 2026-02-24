@@ -12,7 +12,7 @@ On any given day I'm wrangling 20 data marts, 400+ Tableau reports, and way too 
 
 I'm a self-proclaimed chaos wrangler -- whether that's data or my two kids under three.
 
-I downloaded Claude Code back in July 2024 and started asking a question that stuck with me: **What if Claude could do the things we do?** Not replace us -- but help automate the tedium that comes with our jobs. That question, plus a book I read called *The Tech-Wise Family* by Andy Crouch, shaped how I think about this whole thing.
+I downloaded Claude Code back in July 2025 and started asking a question that stuck with me: **What if Claude could do the things we do?** Not replace us -- but help automate the tedium that comes with our jobs. That question, plus a book I read called *The Tech-Wise Family* by Andy Crouch, shaped how I think about this whole thing.
 
 ---
 
