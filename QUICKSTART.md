@@ -1,6 +1,8 @@
-# Quick Start - Get Running in 5 Minutes
+# Quick Start
 
-**Just want to try this without reading 900 lines of docs?** Start here.
+**Just want to try this without reading the full README?** Start here.
+
+**A heads-up:** this repo is a starting place, not a finished product. The agents and skills here were generated as a scaffold -- your team will need to refine them for your specific tools and patterns. Think of this as a reference architecture for how a data team can share and coordinate their use of Claude across the tools that deliver data products to the business.
 
 ## Minimum Viable Setup
 
@@ -52,7 +54,7 @@ claude "Help me design a dbt staging model for customer data"
 claude "Show me what a project looks like when complete"
 ```
 
-**That's it. You're using the framework.**
+**That's the scaffold set up.** Now the real work begins -- adapting the agents and patterns to how your team actually works.
 
 ---
 
@@ -102,13 +104,10 @@ You do NOT need to:
 → Yes. Edit `scripts/start.sh` for branch naming, `scripts/work-init.sh` for project structure.
 
 **"Is this overkill for my simple projects?"**
-→ Probably! This framework adds value when:
-- Working on 3+ projects per month
-- Using multiple tools (dbt + warehouse + orchestration + BI)
-- Building similar things repeatedly
-- Working in a team that needs to share patterns
+→ Probably! This framework adds value when your team delivers data products that span multiple tools (dbt + warehouse + BI) and you want a shared approach to leveraging Claude. For one-off tasks, just use Claude Code directly.
 
-For one-off quick fixes, just use Claude Code normally.
+**"Can I clone this and immediately be productive?"**
+→ Honestly, probably not. Our internal version took months of iterating. This is a starting place -- a scaffold to adapt, not a turnkey solution. The real value comes from your team refining the agents and patterns for your specific stack.
 
 ---
 
