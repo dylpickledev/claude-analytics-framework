@@ -1,260 +1,90 @@
 # dbt MCP Server Setup Guide
 
-## Three Setup Options
+> For step-by-step interactive setup, run `/onboard` which will invoke the `dbt:configuring-dbt-mcp-server` skill automatically.
 
-The dbt MCP server supports three authentication methods. Choose based on your needs:
+## Prerequisites
 
-### Option 1: Local MCP with .env Authentication (Simplest)
+- **`uv` installed**: `brew install uv` (macOS) — required to run `uvx dbt-mcp`
+- **dbt Cloud account** with your Production Environment ID ready
+- Find your Environment ID: dbt Cloud → Deploy → Environments → click prod env → last number in URL
 
-**Best for**: Single developer, local development, quick setup
+## Quick Setup (Claude Code)
 
-**Setup Steps**:
+### Project-level (this repo only)
+Create `.mcp.json` in the project root:
 
-1. **Install dbt MCP server**:
-   ```bash
-   npm install -g @modelcontextprotocol/server-dbt
-   ```
+```json
+{
+  "mcpServers": {
+    "dbt-mcp": {
+      "command": "/opt/homebrew/bin/uvx",
+      "args": ["dbt-mcp"],
+      "env": {
+        "DBT_HOST": "us1.dbt.com",
+        "MULTICELL_ACCOUNT_PREFIX": "te240",
+        "DBT_PROD_ENV_ID": "your-prod-env-id",
+        "DBT_PROJECT_DIR": "/path/to/repos/dbt_cloud",
+        "DBT_PATH": "/opt/homebrew/bin/dbt"
+      }
+    }
+  }
+}
+```
 
-2. **Create/update `.env` file** in project root:
-   ```bash
-   # dbt Cloud API Settings
-   DBT_HOST=cloud.getdbt.com
-   DBT_TOKEN=your-dbt-cloud-api-token
-   DBT_PROD_ENV_ID=your-production-environment-id
+### User-level (all projects)
+```bash
+claude mcp add dbt-mcp \
+  -s user \
+  -e DBT_HOST=us1.dbt.com \
+  -e MULTICELL_ACCOUNT_PREFIX=te240 \
+  -e DBT_PROD_ENV_ID=your-prod-env-id \
+  -e DBT_PROJECT_DIR=/path/to/repos/dbt_cloud \
+  -e DBT_PATH=$(which dbt) \
+  -- $(which uvx) dbt-mcp
+```
 
-   # Multi-cell Account (leave empty for single-cell accounts)
-   MULTICELL_ACCOUNT_PREFIX=
+Stored in `~/.claude.json`. Verify with: `claude mcp list`
 
-   # Local dbt Project Settings
-   DBT_PROJECT_DIR=~/claude-analytics-framework/repos/dbt_cloud
-   DBT_PATH=/path/to/dbt
+## Multi-Cell Accounts
 
-   # Feature Toggles
-   DISABLE_DBT_CLI=false
-   DISABLE_SEMANTIC_LAYER=false
-   DISABLE_DISCOVERY=false
-   DISABLE_SQL=true
-   DISABLE_REMOTE=false
-   ```
+If your dbt Cloud URL is `abc123.us1.dbt.com` — split it:
+- `DBT_HOST=us1.dbt.com` ← **not** `abc123.us1.dbt.com`
+- `MULTICELL_ACCOUNT_PREFIX=abc123`
 
-3. **Configure Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
-   ```json
-   {
-     "mcpServers": {
-       "dbt": {
-         "command": "mcp-server-dbt",
-         "args": [],
-         "env": {
-           "DBT_HOST": "cloud.getdbt.com",
-           "DBT_TOKEN": "your-dbt-cloud-api-token",
-           "DBT_PROD_ENV_ID": "your-production-environment-id",
-           "DBT_PROJECT_DIR": "~/claude-analytics-framework/repos/dbt_cloud"
-         }
-       }
-     }
-   }
-   ```
+Standard accounts use `DBT_HOST=cloud.getdbt.com` with no prefix.
 
-4. **Restart Claude Desktop**
+## Authentication
 
-**Pros**: Simple, no OAuth flow, credentials in one place
-**Cons**: API token in plaintext, manual token rotation
+**Token auth** (simpler): Add `DBT_TOKEN=your-api-token` to env
+- Get token: dbt Cloud → Account Settings → API Tokens → Personal tokens
 
----
+**OAuth** (more secure, multi-cell accounts only):
+- Set `DBT_HOST` to your subdomain — OAuth flow triggers automatically on first use
+- Browser opens for authorization; token cached locally
 
-### Option 2: Local MCP with OAuth Authentication (Most Secure)
-
-**Best for**: Security-conscious teams, shared machines, credential rotation
-
-**Setup Steps**:
-
-1. **Install dbt MCP server**:
-   ```bash
-   npm install -g @modelcontextprotocol/server-dbt
-   ```
-
-2. **Configure OAuth in dbt Cloud**:
-   - Go to Account Settings → Service Tokens
-   - Create OAuth application
-   - Note `client_id` and `client_secret`
-
-3. **Configure Claude Desktop** with OAuth:
-   ```json
-   {
-     "mcpServers": {
-       "dbt": {
-         "command": "mcp-server-dbt",
-         "args": ["--oauth"],
-         "env": {
-           "DBT_HOST": "cloud.getdbt.com",
-           "DBT_OAUTH_CLIENT_ID": "your-oauth-client-id",
-           "DBT_OAUTH_CLIENT_SECRET": "your-oauth-client-secret",
-           "DBT_PROD_ENV_ID": "your-production-environment-id",
-           "DBT_PROJECT_DIR": "~/claude-analytics-framework/repos/dbt_cloud"
-         }
-       }
-     }
-   }
-   ```
-
-4. **First-time authentication**:
-   - Launch Claude Desktop
-   - MCP will open browser for OAuth flow
-   - Authorize application
-   - Token cached locally
-
-5. **Restart Claude Desktop**
-
-**Pros**: Secure token handling, automatic refresh, no plaintext credentials
-**Cons**: Initial OAuth setup, browser-based authentication
-
----
-
-### Option 3: Remote MCP with OAuth (Cloud/Team Setup)
-
-**Best for**: Teams, centralized management, Claude Web
-
-**Setup Steps**:
-
-1. **Deploy dbt MCP server** to cloud environment:
-   ```bash
-   # Example: Deploy to AWS Lambda or Cloud Run
-   # (Deployment scripts not included - depends on infrastructure)
-   ```
-
-2. **Configure OAuth** in dbt Cloud (same as Option 2)
-
-3. **Get MCP endpoint URL** from deployment
-
-4. **Configure Claude** with remote endpoint:
-   ```json
-   {
-     "mcpServers": {
-       "dbt": {
-         "url": "https://your-mcp-server.example.com/dbt",
-         "auth": {
-           "type": "oauth",
-           "client_id": "your-oauth-client-id",
-           "client_secret": "your-oauth-client-secret"
-         },
-         "env": {
-           "DBT_HOST": "cloud.getdbt.com",
-           "DBT_PROD_ENV_ID": "your-production-environment-id"
-         }
-       }
-     }
-   }
-   ```
-
-5. **Test connection** in Claude Desktop or Web
-
-**Pros**: Centralized management, team sharing, works with Claude Web
-**Cons**: Infrastructure overhead, network dependency
-
----
-
-## Configuration Reference
-
-### Environment Variables
+## Environment Variables Reference
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `DBT_HOST` | Yes | dbt Cloud host (e.g., `cloud.getdbt.com`) |
-| `DBT_TOKEN` | Option 1 | dbt Cloud API token |
-| `DBT_OAUTH_CLIENT_ID` | Options 2&3 | OAuth client ID |
-| `DBT_OAUTH_CLIENT_SECRET` | Options 2&3 | OAuth client secret |
+| `DBT_HOST` | Yes | `cloud.getdbt.com` or `us1.dbt.com` for multi-cell |
+| `MULTICELL_ACCOUNT_PREFIX` | Multi-cell only | Prefix from your subdomain (e.g. `abc123`) |
+| `DBT_TOKEN` | Token auth only | Personal or service token |
 | `DBT_PROD_ENV_ID` | Yes | Production environment ID |
-| `MULTICELL_ACCOUNT_PREFIX` | No | Multi-cell account prefix (if applicable) |
-| `DBT_PROJECT_DIR` | Local only | Path to local dbt project |
-| `DBT_PATH` | Local only | Path to dbt executable |
-
-### Feature Toggles
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `DISABLE_DBT_CLI` | `false` | Disable local dbt CLI operations |
-| `DISABLE_SEMANTIC_LAYER` | `false` | Disable semantic layer queries |
-| `DISABLE_DISCOVERY` | `false` | Disable dbt Cloud discovery API |
-| `DISABLE_SQL` | `true` | Disable direct SQL execution (recommended) |
-| `DISABLE_REMOTE` | `false` | Disable remote dbt Cloud operations |
-
----
-
-## Getting dbt Cloud Credentials
-
-### API Token (Option 1)
-1. Log in to dbt Cloud
-2. Go to Account Settings → API Tokens
-3. Click "Create Token"
-4. Copy token immediately (shown once)
-
-### OAuth Credentials (Options 2 & 3)
-1. Log in to dbt Cloud
-2. Go to Account Settings → Service Tokens → OAuth Applications
-3. Click "Create OAuth App"
-4. Set redirect URI (for local: `http://localhost:8080/callback`)
-5. Note `client_id` and `client_secret`
-
-### Production Environment ID
-1. Go to dbt Cloud project
-2. Navigate to Environments
-3. Find production environment
-4. Copy ID from URL: `https://cloud.getdbt.com/accounts/{account}/projects/{project}/environments/{ENV_ID}`
-
----
-
-## Recommended Setup
-
-**For Individual Developers**: Option 1 (Local + .env) - simplest to get started
-
-**For Teams**: Option 2 (Local + OAuth) - balance of security and simplicity
-
-**For Enterprise**: Option 3 (Remote + OAuth) - centralized, auditable, scalable
-
----
+| `DBT_DEV_ENV_ID` | No | Development environment ID (for SQL tools) |
+| `DBT_ACCOUNT_ID` | Admin API only | Your dbt account ID |
+| `DBT_PROJECT_DIR` | CLI commands | Path to folder with `dbt_project.yml` |
+| `DBT_PATH` | CLI commands | Full path to dbt executable (`which dbt`) |
 
 ## Troubleshooting
 
-### MCP Server Not Starting
-- Check `~/Library/Application Support/Claude/logs/` for errors
-- Verify `mcp-server-dbt` installed: `which mcp-server-dbt`
-- Ensure all required env vars set
+**`spawn uvx ENOENT`** — Use full path: `which uvx` → use that output in `command`
 
-### Authentication Failures
-- **API Token**: Verify token not expired, has correct permissions
-- **OAuth**: Check client_id/secret, redirect URI matches
-- **Multi-cell**: Verify `MULTICELL_ACCOUNT_PREFIX` if applicable
+**DNS error / nodename not known** — `DBT_HOST` has wrong format; check multi-cell split above
 
-### Permission Errors
-- Ensure API token/OAuth app has access to target environment
-- Check dbt Cloud user permissions (Developer or higher)
+**401/403 errors** — Token missing or expired; verify `DBT_TOKEN` and permissions
 
----
+**Changes not taking effect** — MCP servers only load at startup; restart Claude Code after any config change
 
-## Security Best Practices
+## Full Documentation
 
-1. **Never commit credentials** to version control
-2. **Use OAuth when possible** (Options 2 & 3)
-3. **Rotate tokens regularly** (especially Option 1)
-4. **Keep `DISABLE_SQL=true`** unless explicitly needed
-5. **Limit MCP server permissions** to read-only when possible
-6. **Use environment-specific credentials** (dev vs prod)
-
----
-
-## Migration Guide
-
-### From API Token to OAuth
-1. Create OAuth app in dbt Cloud
-2. Update Claude Desktop config with OAuth settings
-3. Remove `DBT_TOKEN` from config
-4. Restart Claude Desktop
-5. Complete OAuth flow
-6. Revoke old API token
-
-### From Local to Remote
-1. Deploy MCP server to cloud
-2. Configure OAuth (if not already)
-3. Update Claude config with remote URL
-4. Test connection
-5. Remove local MCP server config
+Official dbt MCP docs: https://docs.getdbt.com/docs/dbt-ai/setup-local-mcp

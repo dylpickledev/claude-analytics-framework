@@ -105,6 +105,7 @@ workspace/*
 
 # User-specific MCP server configuration (contains credentials)
 .claude/mcp.json
+.mcp.json
 
 # Project work tracking - commit everything for collaboration
 # Company-specific configuration
