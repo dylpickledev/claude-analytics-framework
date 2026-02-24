@@ -24,12 +24,13 @@ Crouch has this concept I keep coming back to: **the Innovation Bargain**.
 
 Every technology comes with a **Promise** and a **Contract**:
 
-| | The Promise | The Contract |
-|---|---|---|
-| **General** | Now you can... | You'll no longer be able to... |
-| | You'll no longer have to... | Now you'll have to... |
-| **LLMs** | Write essays, whole websites, or dbt models | Think, have original ideas |
-| | No more hand-writing code or getting YAML *juuust* right | Clean up the mess LLMs can make |
+**The Promise**
+- Now you can... write essays, whole websites, or dbt models
+- You'll no longer have to... write code, get your YAML *juuust* right
+
+**The Contract**
+- You'll no longer be able to... think, have original ideas
+- Now you'll have to... clean up the mess LLMs can make
 
 The README for this repo used to be all Promise. But if I'm honest, Claude probably makes two more problems for every one it fixes. It's fast at producing *and* fixing those problems, so the net is pretty good. But it is not replacing us by any means.
 
@@ -91,11 +92,14 @@ claude-analytics-framework/          <-- This repo (the control center)
 
 I used this repo in a live demo at a data@AMA session -- not a project built for the demo, just how I actually work. I raced Claude through three real-world tasks from our dbt project. Three rounds, two contestants: Claude (with agents, skills, and the dbt MCP) versus me (brain fueled by caffeine, ChatGPT, and dbt Catalog).
 
-| Round | Task | Who Won | What Happened |
-|---|---|---|---|
-| 1 | "Why is this field blank for every recent sale?" | Claude | Both found the answer (union of two source systems, one doesn't have that field). Claude got there faster by reading the SQL directly. |
-| 2 | "Add `ticket_net_tons` to the data mart" | Claude | I hit a compile error from an unrelated config issue. Claude skipped straight to the text change -- faster, but also skipped `dbt parse` validation (a real gap). |
-| 3 | "Build a semantic layer" | Claude | This one's genuinely hard. I was fumbling with ChatGPT output and YAML placement. Claude had the dbt MCP + skills to scaffold it properly. |
+**Round 1 -- "Why is this field blank for every recent sale?"**
+Winner: Claude. Both found the answer (union of two source systems, one doesn't have that field). Claude got there faster by reading the SQL directly.
+
+**Round 2 -- "Add `ticket_net_tons` to the data mart"**
+Winner: Claude. I hit a compile error from an unrelated config issue. Claude skipped straight to the text change -- faster, but also skipped `dbt parse` validation (a real gap).
+
+**Round 3 -- "Build a semantic layer"**
+Winner: Claude. This one's genuinely hard. I was fumbling with ChatGPT output and YAML placement. Claude had the dbt MCP + skills to scaffold it properly.
 
 **The honest takeaway:** Claude was faster on all three, but it also cut corners (skipping validation in Round 2). The proper place for it is as a pair programmer -- augmenting you, not replacing you. You still need to know what "right" looks like.
 
@@ -203,13 +207,19 @@ Most data teams today have individuals using ChatGPT or Claude on their own -- p
 
 This framework is one way to go from individual to team-level. Shared agents mean shared standards. Shared skills mean shared SOPs. Shared project structure means visibility into how work gets done.
 
-| Individual AI usage | Team-level framework |
-|---|---|
-| Ad-hoc conversations | Organized projects with tracking |
-| Generic AI knowledge | Agents configured for YOUR tools |
-| Work scattered across repos | Coordinated delivery of data products |
-| Patterns stuck in one person's head | Knowledge captured and shared |
-| Everyone uses AI differently | Shared approach the team refines together |
+**Individual AI usage**
+- Ad-hoc conversations
+- Generic AI knowledge
+- Work scattered across repos
+- Patterns stuck in one person's head
+- Everyone uses AI differently
+
+**Team-level framework**
+- Organized projects with tracking
+- Agents configured for YOUR tools
+- Coordinated delivery of data products
+- Knowledge captured and shared
+- Shared approach the team refines together
 
 ---
 
