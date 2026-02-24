@@ -2,7 +2,7 @@
 
 > What if Claude was one *with* us?
 
-*The previous README was entirely AI-generated. This README is also AI-generated -- but based on a talk I actually gave. So enjoy the AI-isms mixed with the Dylan-isms. We're all figuring this out together.*
+*The previous README was entirely AI-generated. This README is also AI-generated -- but based on a talk I actually gave. So enjoy the AI-isms mixed with the Dylan-isms.*
 
 ---
 
